@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:http/http.dart' as http;
 
 class ScanPage extends StatefulWidget {
   const ScanPage({super.key});
@@ -10,6 +12,13 @@ class ScanPage extends StatefulWidget {
 
 class _ScanPageState extends State<ScanPage> {
   String? _scannedBarcode;
+  String? _productName;
+  String? _brand;
+  String? _categories;
+  String? _quantity;
+  String? _imageUrl;
+  bool _isLoading = false;
+  String? _errorMessage;
   final MobileScannerController _controller = MobileScannerController();
 
   @override
@@ -18,17 +27,179 @@ class _ScanPageState extends State<ScanPage> {
     super.dispose();
   }
 
+  Future<void> _lookupProduct(String barcode) async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+      _productName = null;
+      _brand = null;
+      _categories = null;
+      _quantity = null;
+      _imageUrl = null;
+    });
+
+    try {
+      final url =
+          'https://world.openfoodfacts.org/api/v2/product/$barcode.json';
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {'User-Agent': 'Grouseries/1.0 (Flutter App)'},
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['status'] == 1) {
+          final product = data['product'];
+          setState(() {
+            _productName = product['product_name'] ?? 'Unknown product';
+            _brand = product['brands'];
+            _categories = product['categories'];
+            _quantity = product['quantity'];
+            _imageUrl = product['image_front_url'] ?? product['image_url'];
+            _isLoading = false;
+          });
+        } else {
+          setState(() {
+            _errorMessage = 'Product not found';
+            _isLoading = false;
+          });
+        }
+      } else {
+        setState(() {
+          _errorMessage = 'Failed to fetch product data';
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Error: $e';
+        _isLoading = false;
+      });
+    }
+  }
+
   void _handleBarcode(BarcodeCapture barcodeCapture) {
     final barcode = barcodeCapture.barcodes.firstOrNull;
     if (barcode != null && barcode.rawValue != null) {
       setState(() {
         _scannedBarcode = barcode.rawValue;
       });
+      _lookupProduct(barcode.rawValue!);
     }
+  }
+
+  void _resetScanner() {
+    setState(() {
+      _scannedBarcode = null;
+      _productName = null;
+      _brand = null;
+      _categories = null;
+      _quantity = null;
+      _imageUrl = null;
+      _errorMessage = null;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Show product info if we have a scanned barcode, otherwise show scanner
+    if (_scannedBarcode != null) {
+      return Container(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Scanned Barcode:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              _scannedBarcode!,
+              style: const TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 32),
+            if (_isLoading)
+              const CircularProgressIndicator()
+            else if (_productName != null) ...[
+              if (_imageUrl != null) ...[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    _imageUrl!,
+                    height: 200,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.image_not_supported, size: 100);
+                    },
+                  ),
+                ),
+                const SizedBox(height: 24),
+              ],
+              const Text(
+                'Product:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                _productName!,
+                style: const TextStyle(fontSize: 24, color: Colors.green),
+                textAlign: TextAlign.center,
+              ),
+              if (_brand != null) ...[
+                const SizedBox(height: 16),
+                Text(
+                  'Brand: $_brand',
+                  style: const TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              if (_quantity != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  'Quantity: $_quantity',
+                  style: const TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              if (_categories != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  'Categories: $_categories',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ] else if (_errorMessage != null)
+              Text(
+                _errorMessage!,
+                style: const TextStyle(fontSize: 18, color: Colors.red),
+                textAlign: TextAlign.center,
+              ),
+            const Spacer(),
+            ElevatedButton.icon(
+              onPressed: _resetScanner,
+              icon: const Icon(Icons.qr_code_scanner),
+              label: const Text('Scan Another Product'),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 16,
+                ),
+                textStyle: const TextStyle(fontSize: 18),
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
+        ),
+      );
+    }
+
+    // Show scanner
     return Column(
       children: [
         Expanded(
@@ -44,17 +215,12 @@ class _ScanPageState extends State<ScanPage> {
           flex: 1,
           child: Container(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Scanned Barcode:',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 16),
                 Text(
-                  _scannedBarcode ?? 'No barcode scanned yet',
-                  style: const TextStyle(fontSize: 16),
+                  'Point camera at barcode to scan',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
               ],
