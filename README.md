@@ -1,16 +1,7 @@
-# flutter_template
+# Flutter Template
 
-A new Flutter project.
+To spin off a new project, write this prompt (replace new_project_name and prefix with your desired names):
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This is currently a template. I want to spin off a new project named Grouseries. Create a new
+firebase project with firebase mcp named {new_project_name} (or {prefix}-{new_project_name} grouseries if that name is not available). Update any files with the new name and remove any referencies to the flutter-template
+firebase project.
