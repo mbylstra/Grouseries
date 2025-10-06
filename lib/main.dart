@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'firebase_options.dart';
 import 'services/auth_service.dart';
 import 'screens/sign_in_screen.dart';
+import 'screens/notes_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -378,11 +379,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static final List<Widget> _pages = <Widget>[
     const HomePage(),
+    const NotesPage(),
     const IconsPage(),
     const ColorsPage(),
   ];
 
-  static const List<String> _titles = <String>['Home', 'Icons', 'Colors'];
+  static const List<String> _titles = <String>[
+    'Home',
+    'Notes',
+    'Icons',
+    'Colors',
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -434,11 +441,13 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.note), label: 'Notes'),
           BottomNavigationBarItem(icon: Icon(Icons.apps), label: 'Icons'),
           BottomNavigationBarItem(icon: Icon(Icons.palette), label: 'Colors'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }
