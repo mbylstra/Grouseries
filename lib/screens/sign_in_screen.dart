@@ -1,8 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trial/services/auth_service.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  bool _isLoading = false;
+
+  Future<void> _handleSignIn() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await AuthService().signInWithGoogle();
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to sign in: $e'),
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,30 +59,20 @@ class SignInScreen extends StatelessWidget {
                   ),
             ),
             const SizedBox(height: 48),
-            ElevatedButton.icon(
-              onPressed: () async {
-                try {
-                  await AuthService().signInWithGoogle();
-                } catch (e) {
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Failed to sign in: $e'),
-                        backgroundColor: Theme.of(context).colorScheme.error,
-                      ),
-                    );
-                  }
-                }
-              },
-              icon: const Icon(Icons.login),
-              label: const Text('Sign in with Google'),
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
+            if (_isLoading)
+              const CircularProgressIndicator()
+            else
+              ElevatedButton.icon(
+                onPressed: _handleSignIn,
+                icon: const Icon(Icons.login),
+                label: const Text('Sign in with Google'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
