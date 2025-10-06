@@ -1,14 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'firebase_options.dart';
+import 'services/auth_service.dart';
+import 'screens/sign_in_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,7 +34,24 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: GoogleFonts.workSansTextTheme(),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page 2'),
+      home: StreamBuilder(
+        stream: AuthService().authStateChanges,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+
+          if (snapshot.hasData) {
+            return const MyHomePage(title: 'Flutter Demo Home Page');
+          }
+
+          return const SignInScreen();
+        },
+      ),
     );
   }
 }
@@ -383,7 +407,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(_titles[_selectedIndex]),
         actions: [
           PopupMenuButton<String>(
-            onSelected: (value) {
+            onSelected: (value) async {
               if (value == 'settings') {
                 Navigator.push(
                   context,
@@ -394,6 +418,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(builder: (context) => const ProfilePage()),
                 );
+              } else if (value == 'signout') {
+                await AuthService().signOut();
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
@@ -404,6 +430,10 @@ class _MyHomePageState extends State<MyHomePage> {
               const PopupMenuItem<String>(
                 value: 'profile',
                 child: Text('Profile'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'signout',
+                child: Text('Sign Out'),
               ),
             ],
           ),
