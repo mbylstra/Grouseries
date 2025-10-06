@@ -17,7 +17,14 @@ class _SignInScreenState extends State<SignInScreen> {
     });
 
     try {
-      await AuthService().signInWithGoogle();
+      final result = await AuthService().signInWithGoogle();
+
+      // If user canceled or result is null, reset loading state
+      if (result == null && mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     } catch (e) {
       if (mounted) {
         setState(() {

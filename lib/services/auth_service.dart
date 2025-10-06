@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -20,8 +21,30 @@ class AuthService {
 
         return await _auth.signInWithPopup(googleProvider);
       } else {
-        // Mobile: Use google_sign_in package (to be implemented later)
-        throw UnimplementedError('Mobile Google Sign-In not yet implemented');
+        // Mobile (Android/iOS): Use official pattern from Firebase docs
+        final GoogleSignIn googleSignIn = GoogleSignIn.instance;
+
+        // Initialize if not already done
+        await googleSignIn.initialize();
+
+        // Trigger the authentication flow
+        final GoogleSignInAccount? googleUser = await googleSignIn.authenticate();
+
+        if (googleUser == null) {
+          // User canceled the sign-in
+          return null;
+        }
+
+        // Obtain auth details from the request
+        final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+
+        // Create a new credential
+        final credential = GoogleAuthProvider.credential(
+          idToken: googleAuth.idToken,
+        );
+
+        // Sign in to Firebase with the credential
+        return await _auth.signInWithCredential(credential);
       }
     } catch (e) {
       // ignore: avoid_print
@@ -32,6 +55,9 @@ class AuthService {
 
   // Sign out
   Future<void> signOut() async {
+    if (!kIsWeb) {
+      await GoogleSignIn.instance.disconnect();
+    }
     await _auth.signOut();
   }
 }
