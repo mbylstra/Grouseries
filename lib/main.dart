@@ -50,17 +50,246 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+class IconsPage extends StatelessWidget {
+  const IconsPage({super.key});
+
+  static final List<IconData> _icons = [
+    Icons.home,
+    Icons.star,
+    Icons.favorite,
+    Icons.settings,
+    Icons.search,
+    Icons.person,
+    Icons.add,
+    Icons.edit,
+    Icons.delete,
+    Icons.save,
+    Icons.share,
+    Icons.check,
+    Icons.close,
+    Icons.menu,
+    Icons.arrow_back,
+    Icons.arrow_forward,
+    Icons.arrow_upward,
+    Icons.arrow_downward,
+    Icons.refresh,
+    Icons.info,
+    Icons.warning,
+    Icons.error,
+    Icons.help,
+    Icons.notifications,
+    Icons.email,
+    Icons.phone,
+    Icons.message,
+    Icons.camera,
+    Icons.photo,
+    Icons.video_camera_back,
+    Icons.music_note,
+    Icons.volume_up,
+    Icons.volume_down,
+    Icons.volume_off,
+    Icons.play_arrow,
+    Icons.pause,
+    Icons.stop,
+    Icons.skip_next,
+    Icons.skip_previous,
+    Icons.fast_forward,
+    Icons.fast_rewind,
+    Icons.calendar_today,
+    Icons.access_time,
+    Icons.lock,
+    Icons.lock_open,
+    Icons.visibility,
+    Icons.visibility_off,
+    Icons.cloud,
+    Icons.cloud_upload,
+    Icons.cloud_download,
+    Icons.attachment,
+    Icons.folder,
+    Icons.folder_open,
+    Icons.insert_drive_file,
+    Icons.description,
+    Icons.picture_as_pdf,
+    Icons.image,
+    Icons.location_on,
+    Icons.map,
+    Icons.navigation,
+    Icons.explore,
+    Icons.directions,
+    Icons.local_cafe,
+    Icons.local_dining,
+    Icons.local_hospital,
+    Icons.local_hotel,
+    Icons.local_pharmacy,
+    Icons.shopping_cart,
+    Icons.shopping_bag,
+    Icons.store,
+    Icons.card_giftcard,
+    Icons.credit_card,
+    Icons.account_balance,
+    Icons.monetization_on,
+    Icons.trending_up,
+    Icons.trending_down,
+    Icons.bar_chart,
+    Icons.pie_chart,
+    Icons.show_chart,
+    Icons.timeline,
+    Icons.language,
+    Icons.translate,
+    Icons.public,
+    Icons.vpn_lock,
+    Icons.wifi,
+    Icons.bluetooth,
+    Icons.battery_full,
+    Icons.brightness_high,
+    Icons.brightness_low,
+    Icons.flashlight_on,
+    Icons.flashlight_off,
+    Icons.airplanemode_active,
+    Icons.print,
+    Icons.computer,
+    Icons.keyboard,
+    Icons.mouse,
+    Icons.headset,
+    Icons.watch,
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      padding: const EdgeInsets.all(8.0),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 5,
+        crossAxisSpacing: 8.0,
+        mainAxisSpacing: 8.0,
+      ),
+      itemCount: _icons.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: Center(
+            child: Icon(
+              _icons[index],
+              size: 32.0,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class ColorsPage extends StatelessWidget {
+  const ColorsPage({super.key});
+
+  static final List<MaterialColor> _colors = [
+    Colors.red,
+    Colors.pink,
+    Colors.purple,
+    Colors.deepPurple,
+    Colors.indigo,
+    Colors.blue,
+    Colors.lightBlue,
+    Colors.cyan,
+    Colors.teal,
+    Colors.green,
+    Colors.lightGreen,
+    Colors.lime,
+    Colors.yellow,
+    Colors.amber,
+    Colors.orange,
+    Colors.deepOrange,
+    Colors.brown,
+    Colors.grey,
+    Colors.blueGrey,
+  ];
+
+  static final List<int> _shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.all(8.0),
+      itemCount: _colors.length,
+      itemBuilder: (context, index) {
+        final color = _colors[index];
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                _getColorName(color),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 5,
+                crossAxisSpacing: 4.0,
+                mainAxisSpacing: 4.0,
+                childAspectRatio: 1.5,
+              ),
+              itemCount: _shades.length,
+              itemBuilder: (context, shadeIndex) {
+                final shade = _shades[shadeIndex];
+                return Container(
+                  color: color[shade],
+                  child: Center(
+                    child: Text(
+                      '$shade',
+                      style: TextStyle(
+                        color: shade >= 500 ? Colors.white : Colors.black,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+          ],
+        );
+      },
+    );
+  }
+
+  String _getColorName(MaterialColor color) {
+    if (color == Colors.red) return 'Red';
+    if (color == Colors.pink) return 'Pink';
+    if (color == Colors.purple) return 'Purple';
+    if (color == Colors.deepPurple) return 'Deep Purple';
+    if (color == Colors.indigo) return 'Indigo';
+    if (color == Colors.blue) return 'Blue';
+    if (color == Colors.lightBlue) return 'Light Blue';
+    if (color == Colors.cyan) return 'Cyan';
+    if (color == Colors.teal) return 'Teal';
+    if (color == Colors.green) return 'Green';
+    if (color == Colors.lightGreen) return 'Light Green';
+    if (color == Colors.lime) return 'Lime';
+    if (color == Colors.yellow) return 'Yellow';
+    if (color == Colors.amber) return 'Amber';
+    if (color == Colors.orange) return 'Orange';
+    if (color == Colors.deepOrange) return 'Deep Orange';
+    if (color == Colors.brown) return 'Brown';
+    if (color == Colors.grey) return 'Grey';
+    if (color == Colors.blueGrey) return 'Blue Grey';
+    return 'Unknown';
+  }
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   static const List<Widget> _pages = <Widget>[
-    Center(child: Text('Tab 1', style: TextStyle(fontSize: 24))),
-    Center(child: Text('Tab 2', style: TextStyle(fontSize: 24))),
+    IconsPage(),
+    ColorsPage(),
   ];
 
   static const List<String> _titles = <String>[
-    'Tab 1',
-    'Tab 2',
+    'Icons',
+    'Colors',
   ];
 
   void _onItemTapped(int index) {
@@ -80,12 +309,12 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.looks_one),
-            label: 'Tab 1',
+            icon: Icon(Icons.apps),
+            label: 'Icons',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.looks_two),
-            label: 'Tab 2',
+            icon: Icon(Icons.palette),
+            label: 'Colors',
           ),
         ],
         currentIndex: _selectedIndex,
