@@ -16,14 +16,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
-          primary: Color(0xFF212121),        // Dark grey (WCAG AAA compliant)
-          onPrimary: Color(0xFFFFFFFF),      // White
-          secondary: Color(0xFF616161),      // Medium grey (WCAG AA compliant)
-          onSecondary: Color(0xFFFFFFFF),    // White
-          error: Color(0xFF212121),          // Dark grey for errors
-          onError: Color(0xFFFFFFFF),        // White
-          surface: Color(0xFFFFFFFF),        // White
-          onSurface: Color(0xFF212121),      // Dark grey
+          primary: Color(0xFF212121), // Dark grey (WCAG AAA compliant)
+          onPrimary: Color(0xFFFFFFFF), // White
+          secondary: Color(0xFF616161), // Medium grey (WCAG AA compliant)
+          onSecondary: Color(0xFFFFFFFF), // White
+          error: Color(0xFF212121), // Dark grey for errors
+          onError: Color(0xFFFFFFFF), // White
+          surface: Color(0xFFFFFFFF), // White
+          onSurface: Color(0xFF212121), // Dark grey
         ),
         textTheme: GoogleFonts.workSansTextTheme(),
       ),
@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('Dude!!!! You have pushed the button this many times:'),
+            const Text('Dude5, You have pushed the button this many times:'),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
