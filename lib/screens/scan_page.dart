@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({super.key});
@@ -17,6 +19,7 @@ class _ScanPageState extends State<ScanPage> {
   String? _categories;
   String? _quantity;
   String? _imageUrl;
+  double _rating = 0;
   bool _isLoading = false;
   String? _errorMessage;
   final MobileScannerController _controller = MobileScannerController();
@@ -96,8 +99,51 @@ class _ScanPageState extends State<ScanPage> {
       _categories = null;
       _quantity = null;
       _imageUrl = null;
+      _rating = 0;
       _errorMessage = null;
     });
+  }
+
+  Future<void> _saveProductRating() async {
+    if (_scannedBarcode == null) return;
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('ratings')
+          .doc(_scannedBarcode)
+          .set({
+            'name': _productName,
+            'brand': _brand,
+            'categories': _categories,
+            'quantity': _quantity,
+            'barcode': _scannedBarcode,
+            'rating': _rating,
+          });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Rating saved successfully!'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error saving rating: $e'),
+            backgroundColor: Colors.red,
+            duration: const Duration(days: 365),
+            action: SnackBarAction(
+              label: 'Dismiss',
+              textColor: Colors.white,
+              onPressed: () {},
+            ),
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -174,6 +220,25 @@ class _ScanPageState extends State<ScanPage> {
                   textAlign: TextAlign.center,
                 ),
               ],
+              const SizedBox(height: 24),
+              const Text(
+                'Rate this product:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              RatingStars(
+                value: _rating,
+                onValueChanged: (v) {
+                  setState(() {
+                    _rating = v;
+                  });
+                  _saveProductRating();
+                },
+                starCount: 5,
+                starSize: 32,
+                starColor: Colors.amber,
+                starOffColor: const Color(0xffe7e8ea),
+              ),
             ] else if (_errorMessage != null)
               Text(
                 _errorMessage!,
