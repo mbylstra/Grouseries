@@ -23,20 +23,11 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -60,9 +51,41 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAA0DAlN_cW36UzE_uDVdVrpvFlUOPIlz8',
-    appId: '1:762525351037:android:4e1685234862933e310514',
+    appId: '1:762525351037:android:303ded1597c4a7be310514',
     messagingSenderId: '762525351037',
     projectId: 'mb-flutter-template',
     storageBucket: 'mb-flutter-template.firebasestorage.app',
   );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyAoZFgjuRqjGwpbrK25jtigr3EOx6og3Vg',
+    appId: '1:762525351037:ios:62a5a5d7ddf363d5310514',
+    messagingSenderId: '762525351037',
+    projectId: 'mb-flutter-template',
+    storageBucket: 'mb-flutter-template.firebasestorage.app',
+    androidClientId: '762525351037-7mfrdt0ik62t17ut2q50os0oqkueljf8.apps.googleusercontent.com',
+    iosClientId: '762525351037-7bfus7qi2rcsp06piaqhff203f64mfi5.apps.googleusercontent.com',
+    iosBundleId: 'com.example.flutterTemplate',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAoZFgjuRqjGwpbrK25jtigr3EOx6og3Vg',
+    appId: '1:762525351037:ios:62a5a5d7ddf363d5310514',
+    messagingSenderId: '762525351037',
+    projectId: 'mb-flutter-template',
+    storageBucket: 'mb-flutter-template.firebasestorage.app',
+    androidClientId: '762525351037-7mfrdt0ik62t17ut2q50os0oqkueljf8.apps.googleusercontent.com',
+    iosClientId: '762525351037-7bfus7qi2rcsp06piaqhff203f64mfi5.apps.googleusercontent.com',
+    iosBundleId: 'com.example.flutterTemplate',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyAZztg4l_y_G2t64akrR-9kSWW5VV66gDI',
+    appId: '1:762525351037:web:276dcf9b25fa9aca310514',
+    messagingSenderId: '762525351037',
+    projectId: 'mb-flutter-template',
+    authDomain: 'mb-flutter-template.firebaseapp.com',
+    storageBucket: 'mb-flutter-template.firebasestorage.app',
+  );
+
 }

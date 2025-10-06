@@ -1,4 +1,4 @@
-# flutter_trial
+# flutter_template
 
 A new Flutter project.
 
