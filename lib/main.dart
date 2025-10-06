@@ -7,9 +7,7 @@ import 'screens/sign_in_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -39,9 +37,7 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
+              body: Center(child: CircularProgressIndicator()),
             );
           }
 
@@ -80,12 +76,8 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
-      body: const Center(
-        child: Text('Settings Page'),
-      ),
+      appBar: AppBar(title: const Text('Settings')),
+      body: const Center(child: Text('Settings Page')),
     );
   }
 }
@@ -96,12 +88,8 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-      ),
-      body: const Center(
-        child: Text('Profile Page'),
-      ),
+      appBar: AppBar(title: const Text('Profile')),
+      body: const Center(child: Text('Profile Page')),
     );
   }
 }
@@ -264,14 +252,7 @@ class IconsPage extends StatelessWidget {
       ),
       itemCount: _icons.length,
       itemBuilder: (context, index) {
-        return Card(
-          child: Center(
-            child: Icon(
-              _icons[index],
-              size: 32.0,
-            ),
-          ),
-        );
+        return Card(child: Center(child: Icon(_icons[index], size: 32.0)));
       },
     );
   }
@@ -302,7 +283,18 @@ class ColorsPage extends StatelessWidget {
     Colors.blueGrey,
   ];
 
-  static final List<int> _shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+  static final List<int> _shades = [
+    50,
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800,
+    900,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -318,7 +310,10 @@ class ColorsPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 _getColorName(color),
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             GridView.builder(
@@ -387,11 +382,7 @@ class _MyHomePageState extends State<MyHomePage> {
     const ColorsPage(),
   ];
 
-  static const List<String> _titles = <String>[
-    'Home',
-    'Icons',
-    'Colors',
-  ];
+  static const List<String> _titles = <String>['Home', 'Icons', 'Colors'];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -442,18 +433,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.apps),
-            label: 'Icons',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.palette),
-            label: 'Colors',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.apps), label: 'Icons'),
+          BottomNavigationBarItem(icon: Icon(Icons.palette), label: 'Colors'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

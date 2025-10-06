@@ -63,8 +63,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '762525351037',
     projectId: 'mb-flutter-template',
     storageBucket: 'mb-flutter-template.firebasestorage.app',
-    androidClientId: '762525351037-7mfrdt0ik62t17ut2q50os0oqkueljf8.apps.googleusercontent.com',
-    iosClientId: '762525351037-7bfus7qi2rcsp06piaqhff203f64mfi5.apps.googleusercontent.com',
+    androidClientId:
+        '762525351037-7mfrdt0ik62t17ut2q50os0oqkueljf8.apps.googleusercontent.com',
+    iosClientId:
+        '762525351037-7bfus7qi2rcsp06piaqhff203f64mfi5.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterTemplate',
   );
 
@@ -74,8 +76,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '762525351037',
     projectId: 'mb-flutter-template',
     storageBucket: 'mb-flutter-template.firebasestorage.app',
-    androidClientId: '762525351037-7mfrdt0ik62t17ut2q50os0oqkueljf8.apps.googleusercontent.com',
-    iosClientId: '762525351037-7bfus7qi2rcsp06piaqhff203f64mfi5.apps.googleusercontent.com',
+    androidClientId:
+        '762525351037-7mfrdt0ik62t17ut2q50os0oqkueljf8.apps.googleusercontent.com',
+    iosClientId:
+        '762525351037-7bfus7qi2rcsp06piaqhff203f64mfi5.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterTemplate',
   );
 
@@ -87,5 +91,4 @@ class DefaultFirebaseOptions {
     authDomain: 'mb-flutter-template.firebaseapp.com',
     storageBucket: 'mb-flutter-template.firebasestorage.app',
   );
-
 }

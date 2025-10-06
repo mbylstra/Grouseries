@@ -28,7 +28,8 @@ class AuthService {
         await googleSignIn.initialize();
 
         // Trigger the authentication flow
-        final GoogleSignInAccount googleUser = await googleSignIn.authenticate();
+        final GoogleSignInAccount googleUser = await googleSignIn
+            .authenticate();
 
         // Obtain auth details from the request
         final GoogleSignInAuthentication googleAuth = googleUser.authentication;

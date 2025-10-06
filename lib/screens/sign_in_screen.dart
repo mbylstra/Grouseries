@@ -54,16 +54,13 @@ class _SignInScreenState extends State<SignInScreen> {
               color: Theme.of(context).colorScheme.primary,
             ),
             const SizedBox(height: 32),
-            Text(
-              'Welcome',
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
+            Text('Welcome', style: Theme.of(context).textTheme.displayMedium),
             const SizedBox(height: 16),
             Text(
               'Sign in to continue',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface.withAlpha(153),
-                  ),
+                color: Theme.of(context).colorScheme.onSurface.withAlpha(153),
+              ),
             ),
             const SizedBox(height: 48),
             if (_isLoading)
