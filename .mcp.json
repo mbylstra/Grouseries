@@ -1,0 +1,23 @@
+{
+    "mcpServers": {
+        "playwright": {
+            "type": "stdio",
+            "command": "npx",
+            "args": ["@playwright/mcp@latest"],
+            "env": {}
+        },
+        "context7": {
+            "url": "https://mcp.context7.com/mcp",
+            "type": "http",
+            "headers": {
+                "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+            }
+        },
+        "firebase": {
+            "type": "stdio",
+            "command": "npx",
+            "args": ["-y", "firebase-tools@latest", "experimental:mcp"],
+            "env": {}
+        }
+    }
+}
