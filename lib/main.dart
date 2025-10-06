@@ -16,14 +16,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
-          primary: Color(0xFF1A1A1A),        // Dark grey
-          onPrimary: Color(0xFFF5F5F5),      // Off-white
-          secondary: Color(0xFF4A4A4A),      // Medium grey
-          onSecondary: Color(0xFFF5F5F5),    // Off-white
-          error: Color(0xFF333333),          // Dark grey for errors
+          primary: Color(0xFF212121),        // Dark grey (WCAG AAA compliant)
+          onPrimary: Color(0xFFFFFFFF),      // White
+          secondary: Color(0xFF616161),      // Medium grey (WCAG AA compliant)
+          onSecondary: Color(0xFFFFFFFF),    // White
+          error: Color(0xFF212121),          // Dark grey for errors
           onError: Color(0xFFFFFFFF),        // White
-          surface: Color(0xFFFAFAFA),        // Very light grey
-          onSurface: Color(0xFF1A1A1A),      // Dark grey
+          surface: Color(0xFFFFFFFF),        // White
+          onSurface: Color(0xFF212121),      // Dark grey
         ),
         textTheme: GoogleFonts.workSansTextTheme(),
       ),
