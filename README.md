@@ -11,4 +11,4 @@ Create a new firestore database using Firebase MCP.
 
 AI is not exactly thorough so after that you will probably need to prompt:
 
-There are still lots of references flutter template. Do a proper search.
+There are still lots of references to the flutter template. Do a proper search.
