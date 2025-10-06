@@ -1,4 +1,4 @@
-.PHONY: flutter-run-web flutter-run flutter-analyze format run-widgetbook-web rebase-from-latest-template help
+.PHONY: flutter-run-web flutter-run flutter-analyze format run-widgetbook-web adb-wsl rebase-from-latest-template help
 
 .DEFAULT_GOAL := help
 
@@ -10,6 +10,7 @@ help:
 	@echo "  make format            - Format Dart code"
 	@echo "  make run-widgetbook-web - Run Widgetbook in web mode on port 8081"
 	@echo "  make rebase-from-latest-template - Rebase current branch on latest template changes"
+	@echo "  make adb-wsl           - Connect to Android device from WSL"
 
 flutter-run-web:
 	flutter run -d web-server --web-port=8080
