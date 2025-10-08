@@ -23,10 +23,12 @@ class _ScanPageState extends State<ScanPage> {
   bool _isLoading = false;
   String? _errorMessage;
   final MobileScannerController _controller = MobileScannerController();
+  final TextEditingController _notesController = TextEditingController();
 
   @override
   void dispose() {
     _controller.dispose();
+    _notesController.dispose();
     super.dispose();
   }
 
@@ -101,6 +103,7 @@ class _ScanPageState extends State<ScanPage> {
       _imageUrl = null;
       _rating = 0;
       _errorMessage = null;
+      _notesController.clear();
     });
   }
 
@@ -118,6 +121,7 @@ class _ScanPageState extends State<ScanPage> {
             'quantity': _quantity,
             'barcode': _scannedBarcode,
             'rating': _rating,
+            'notes': _notesController.text,
           });
 
       if (mounted) {
@@ -238,6 +242,17 @@ class _ScanPageState extends State<ScanPage> {
                   starSize: 32,
                   starColor: Colors.amber,
                   starOffColor: const Color(0xffe7e8ea),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _notesController,
+                  decoration: const InputDecoration(
+                    labelText: 'Notes',
+                    hintText: 'Add notes about this product...',
+                    border: OutlineInputBorder(),
+                  ),
+                  maxLines: 3,
+                  onChanged: (_) => _saveProductRating(),
                 ),
               ] else if (_errorMessage != null)
                 Text(
