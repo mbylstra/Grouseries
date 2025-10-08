@@ -15,6 +15,6 @@
 
 ### Import Style
 
-- Prefer `show` for ubiquitous packages where concise usage is desired (e.g., Flutter material widgets)
-- Prefer prefixed imports (`as`) for other cases to make code origin immediately clear
-- Avoid basic wildcard imports - they make it impossible to know where variables come from when reading code
+- Never use basic wildcard imports - they make it impossible to know where variables come from when reading code
+- Prefer `show` when the meaning of the import is clear without the package (either because it is self explanatory or because it is a very commonly used variable such as a Flutter widget).Eg: `firestore_auth.FirestoreAuth` is not more readable than just `FirestoreAuth`. `Card` is preferable to `material.Card` because it is so commonly used in UI screens.
+- Prefer prefixed imports (`as`) when it gives clarity to the name. Eg: `firestore.Timestamp` is clearer than just `Timestamp`
