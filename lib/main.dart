@@ -1,14 +1,60 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'firebase_options.dart';
-import 'services/auth_service.dart';
-import 'screens/sign_in_screen.dart';
-import 'screens/notes_page.dart';
-import 'theme.dart';
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:flutter/material.dart'
+    show
+        AppBar,
+        BottomNavigationBar,
+        BottomNavigationBarItem,
+        BuildContext,
+        Card,
+        Center,
+        CircularProgressIndicator,
+        Colors,
+        Column,
+        ConnectionState,
+        Container,
+        CrossAxisAlignment,
+        EdgeInsets,
+        GridView,
+        Icon,
+        IconData,
+        Icons,
+        ListView,
+        MaterialApp,
+        MaterialColor,
+        MaterialPageRoute,
+        Navigator,
+        NeverScrollableScrollPhysics,
+        Padding,
+        PopupMenuButton,
+        PopupMenuEntry,
+        PopupMenuItem,
+        Row,
+        Scaffold,
+        SliverGridDelegateWithFixedCrossAxisCount,
+        SizedBox,
+        State,
+        StatefulWidget,
+        StatelessWidget,
+        StreamBuilder,
+        Text,
+        TextStyle,
+        Theme,
+        Widget,
+        runApp,
+        WidgetsFlutterBinding,
+        BottomNavigationBarType,
+        FontWeight;
+import 'firebase_options.dart' as firebase_options;
+import 'services/auth_service.dart' as auth;
+import 'screens/sign_in_screen.dart' as screens;
+import 'screens/notes_page.dart' as screens_notes;
+import 'theme.dart' as theme;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await firebase_core.Firebase.initializeApp(
+    options: firebase_options.DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -19,9 +65,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: appTheme,
+      theme: theme.appTheme,
       home: StreamBuilder(
-        stream: AuthService().authStateChanges,
+        stream: auth.AuthService().authStateChanges,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Scaffold(
@@ -33,7 +79,7 @@ class MyApp extends StatelessWidget {
             return const MyHomePage(title: 'Flutter Demo Home Page');
           }
 
-          return const SignInScreen();
+          return const screens.SignInScreen();
         },
       ),
     );
@@ -366,7 +412,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static final List<Widget> _pages = <Widget>[
     const HomePage(),
-    const NotesPage(),
+    const screens_notes.NotesPage(),
     const IconsPage(),
     const ColorsPage(),
   ];
@@ -404,7 +450,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => const ProfilePage()),
                 );
               } else if (value == 'signout') {
-                await AuthService().signOut();
+                await auth.AuthService().signOut();
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[

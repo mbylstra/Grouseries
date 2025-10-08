@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart'
+    show Brightness, Color, ColorScheme, ThemeData;
+import 'package:google_fonts/google_fonts.dart' as google_fonts;
 
 ThemeData get appTheme => ThemeData(
   colorScheme: const ColorScheme(
@@ -13,5 +14,5 @@ ThemeData get appTheme => ThemeData(
     surface: Color(0xFFFFFFFF), // White
     onSurface: Color(0xFF212121), // Dark grey
   ),
-  textTheme: GoogleFonts.workSansTextTheme(),
+  textTheme: google_fonts.GoogleFonts.workSansTextTheme(),
 );

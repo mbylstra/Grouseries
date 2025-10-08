@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 
 class Note {
   final String id;
@@ -13,13 +13,13 @@ class Note {
     required this.createdAt,
   });
 
-  factory Note.fromFirestore(DocumentSnapshot doc) {
+  factory Note.fromFirestore(firestore.DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return Note(
       id: doc.id,
       userId: data['userId'] as String,
       content: data['content'] as String,
-      createdAt: (data['createdAt'] as Timestamp).toDate(),
+      createdAt: (data['createdAt'] as firestore.Timestamp).toDate(),
     );
   }
 
@@ -27,7 +27,7 @@ class Note {
     return {
       'userId': userId,
       'content': content,
-      'createdAt': Timestamp.fromDate(createdAt),
+      'createdAt': firestore.Timestamp.fromDate(createdAt),
     };
   }
 }

@@ -1,22 +1,24 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart'
+    show GoogleSignIn, GoogleSignInAccount, GoogleSignInAuthentication;
 
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final firebase_auth.FirebaseAuth _auth = firebase_auth.FirebaseAuth.instance;
 
   // Auth state stream
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
+  Stream<firebase_auth.User?> get authStateChanges => _auth.authStateChanges();
 
   // Current user
-  User? get currentUser => _auth.currentUser;
+  firebase_auth.User? get currentUser => _auth.currentUser;
 
   // Sign in with Google
-  Future<UserCredential?> signInWithGoogle() async {
+  Future<firebase_auth.UserCredential?> signInWithGoogle() async {
     try {
       if (kIsWeb) {
         // Web: Use Firebase Auth popup
-        final GoogleAuthProvider googleProvider = GoogleAuthProvider();
+        final firebase_auth.GoogleAuthProvider googleProvider =
+            firebase_auth.GoogleAuthProvider();
         googleProvider.addScope('email');
 
         return await _auth.signInWithPopup(googleProvider);
@@ -35,7 +37,7 @@ class AuthService {
         final GoogleSignInAuthentication googleAuth = googleUser.authentication;
 
         // Create a new credential
-        final credential = GoogleAuthProvider.credential(
+        final credential = firebase_auth.GoogleAuthProvider.credential(
           idToken: googleAuth.idToken,
         );
 

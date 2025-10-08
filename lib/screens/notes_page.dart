@@ -1,6 +1,40 @@
-import 'package:flutter/material.dart';
-import '../models/note.dart';
-import '../services/notes_service.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Card,
+        Center,
+        CircularProgressIndicator,
+        Colors,
+        Column,
+        ConnectionState,
+        CrossAxisAlignment,
+        Divider,
+        EdgeInsets,
+        Expanded,
+        FontWeight,
+        Icon,
+        IconButton,
+        Icons,
+        InputDecoration,
+        ListTile,
+        ListView,
+        OutlineInputBorder,
+        Padding,
+        Row,
+        ScaffoldMessenger,
+        SizedBox,
+        SnackBar,
+        State,
+        StatefulWidget,
+        StreamBuilder,
+        Text,
+        TextEditingController,
+        TextField,
+        TextInputAction,
+        TextStyle,
+        Widget;
+import '../models/note.dart' as models;
+import '../services/notes_service.dart' as services;
 
 class NotesPage extends StatefulWidget {
   const NotesPage({super.key});
@@ -10,7 +44,7 @@ class NotesPage extends StatefulWidget {
 }
 
 class _NotesPageState extends State<NotesPage> {
-  final NotesService _notesService = NotesService();
+  final services.NotesService _notesService = services.NotesService();
   final TextEditingController _noteController = TextEditingController();
 
   @override
@@ -96,7 +130,7 @@ class _NotesPageState extends State<NotesPage> {
           const Divider(),
           const SizedBox(height: 8),
           Expanded(
-            child: StreamBuilder<List<Note>>(
+            child: StreamBuilder<List<models.Note>>(
               stream: _notesService.getNotesStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {

@@ -1,5 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_template/services/auth_service.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Center,
+        CircularProgressIndicator,
+        Column,
+        EdgeInsets,
+        ElevatedButton,
+        Icon,
+        Icons,
+        MainAxisAlignment,
+        Scaffold,
+        ScaffoldMessenger,
+        SizedBox,
+        SnackBar,
+        State,
+        StatefulWidget,
+        Text,
+        Theme,
+        Widget;
+import 'package:flutter_template/services/auth_service.dart' show AuthService;
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});

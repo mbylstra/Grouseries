@@ -1,12 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../models/note.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore_package;
+import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
+import '../models/note.dart' show Note;
 
 class NotesService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final firestore_package.FirebaseFirestore firestore =
+      firestore_package.FirebaseFirestore.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
-  String? get _currentUserId => _auth.currentUser?.uid;
+  String? get _currentUserId => auth.currentUser?.uid;
 
   // Get notes stream for the current user
   Stream<List<Note>> getNotesStream() {
@@ -14,7 +15,7 @@ class NotesService {
       return Stream.value([]);
     }
 
-    return _firestore
+    return firestore
         .collection('notes')
         .where('userId', isEqualTo: _currentUserId)
         .orderBy('createdAt', descending: true)
@@ -38,11 +39,11 @@ class NotesService {
       createdAt: DateTime.now(),
     );
 
-    await _firestore.collection('notes').add(note.toFirestore());
+    await firestore.collection('notes').add(note.toFirestore());
   }
 
   // Delete a note
   Future<void> deleteNote(String noteId) async {
-    await _firestore.collection('notes').doc(noteId).delete();
+    await firestore.collection('notes').doc(noteId).delete();
   }
 }
