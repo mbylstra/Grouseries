@@ -1,4 +1,4 @@
-.PHONY: flutter-run-web flutter-run flutter-analyze format help
+.PHONY: flutter-run-web flutter-run flutter-analyze format run-widgetbook-web help
 
 .DEFAULT_GOAL := help
 
@@ -8,6 +8,7 @@ help:
 	@echo "  make flutter-run       - Run Flutter"
 	@echo "  make flutter-analyze   - Run Flutter analyzer"
 	@echo "  make format            - Format Dart code"
+	@echo "  make run-widgetbook-web - Run Widgetbook in web mode on port 8081"
 
 flutter-run-web:
 	flutter run -d web-server --web-port=8080
@@ -20,6 +21,9 @@ flutter-analyze:
 
 format:
 	dart format .
+
+run-widgetbook-web:
+	cd widgetbook && flutter run -d web-server --web-port=8123
 
 adb-wsl:
 	@echo 'in windows, run `adb shell ip route` to get your IP address and edit ANDROID_IP_ADDRESS_FOR_WSL_ADB in .envrc in this repo. Then run `adb tcpip 5555` to allow connections from WSL'
