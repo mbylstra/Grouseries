@@ -20,3 +20,7 @@ flutter-analyze:
 
 format:
 	dart format .
+
+adb-wsl:
+	@echo 'in windows, run `adb shell ip route` to get your IP address and edit ANDROID_IP_ADDRESS_FOR_WSL_ADB in .envrc in this repo. Then run `adb tcpip 5555` to allow connections from WSL'
+	adb connect $$ANDROID_IP_ADDRESS_FOR_WSL_ADB:5555
