@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({super.key});
@@ -154,129 +154,24 @@ class _ScanPageState extends State<ScanPage> {
   Widget build(BuildContext context) {
     // Show product info if we have a scanned barcode, otherwise show scanner
     if (_scannedBarcode != null) {
-      return SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            children: [
-              const Text(
-                'Scanned Barcode:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                _scannedBarcode!,
-                style: const TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 32),
-              if (_isLoading)
-                const CircularProgressIndicator()
-              else if (_productName != null) ...[
-                if (_imageUrl != null) ...[
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      _imageUrl!,
-                      height: 200,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(Icons.image_not_supported, size: 100);
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                ],
-                const Text(
-                  'Product:',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  _productName!,
-                  style: const TextStyle(fontSize: 24, color: Colors.green),
-                  textAlign: TextAlign.center,
-                ),
-                if (_brand != null) ...[
-                  const SizedBox(height: 16),
-                  Text(
-                    'Brand: $_brand',
-                    style: const TextStyle(fontSize: 18),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-                if (_quantity != null) ...[
-                  const SizedBox(height: 12),
-                  Text(
-                    'Quantity: $_quantity',
-                    style: const TextStyle(fontSize: 18),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-                if (_categories != null) ...[
-                  const SizedBox(height: 12),
-                  Text(
-                    'Categories: $_categories',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-                const SizedBox(height: 24),
-                const Text(
-                  'Rate this product:',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 12),
-                RatingStars(
-                  value: _rating,
-                  onValueChanged: (v) {
-                    setState(() {
-                      _rating = v;
-                    });
-                    _saveProductRating();
-                  },
-                  starCount: 5,
-                  starSize: 32,
-                  starColor: Colors.amber,
-                  starOffColor: const Color(0xffe7e8ea),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _notesController,
-                  decoration: const InputDecoration(
-                    labelText: 'Notes',
-                    hintText: 'Add notes about this product...',
-                    border: OutlineInputBorder(),
-                  ),
-                  maxLines: 3,
-                  onChanged: (_) => _saveProductRating(),
-                ),
-              ] else if (_errorMessage != null)
-                Text(
-                  _errorMessage!,
-                  style: const TextStyle(fontSize: 18, color: Colors.red),
-                  textAlign: TextAlign.center,
-                ),
-              const SizedBox(height: 32),
-              ElevatedButton.icon(
-                onPressed: _resetScanner,
-                icon: const Icon(Icons.qr_code_scanner),
-                label: const Text('Scan Another Product'),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
-                  ),
-                  textStyle: const TextStyle(fontSize: 18),
-                ),
-              ),
-              const SizedBox(height: 24),
-            ],
-          ),
-        ),
+      return ProductDetails(
+        barcode: _scannedBarcode!,
+        productName: _productName,
+        brand: _brand,
+        categories: _categories,
+        quantity: _quantity,
+        imageUrl: _imageUrl,
+        rating: _rating,
+        isLoading: _isLoading,
+        errorMessage: _errorMessage,
+        notesController: _notesController,
+        onRatingChanged: (v) {
+          setState(() {
+            _rating = v;
+          });
+          _saveProductRating();
+        },
+        onReset: _resetScanner,
       );
     }
 
@@ -309,6 +204,160 @@ class _ScanPageState extends State<ScanPage> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ProductDetails extends StatelessWidget {
+  final String barcode;
+  final String? productName;
+  final String? brand;
+  final String? categories;
+  final String? quantity;
+  final String? imageUrl;
+  final double rating;
+  final bool isLoading;
+  final String? errorMessage;
+  final TextEditingController notesController;
+  final Function(double) onRatingChanged;
+  final VoidCallback onReset;
+
+  const ProductDetails({
+    super.key,
+    required this.barcode,
+    this.productName,
+    this.brand,
+    this.categories,
+    this.quantity,
+    this.imageUrl,
+    required this.rating,
+    required this.isLoading,
+    this.errorMessage,
+    required this.notesController,
+    required this.onRatingChanged,
+    required this.onReset,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          children: [
+            const Text(
+              'Scanned Barcode:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              barcode,
+              style: const TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 32),
+            if (isLoading)
+              const CircularProgressIndicator()
+            else if (productName != null) ...[
+              if (imageUrl != null) ...[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    imageUrl!,
+                    height: 200,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.image_not_supported, size: 100);
+                    },
+                  ),
+                ),
+                const SizedBox(height: 24),
+              ],
+              const Text(
+                'Product:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                productName!,
+                style: const TextStyle(fontSize: 24, color: Colors.green),
+                textAlign: TextAlign.center,
+              ),
+              if (brand != null) ...[
+                const SizedBox(height: 16),
+                Text(
+                  'Brand: $brand',
+                  style: const TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              if (quantity != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  'Quantity: $quantity',
+                  style: const TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              if (categories != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  'Categories: $categories',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              const SizedBox(height: 24),
+              const Text(
+                'Rate this product:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              RatingStars(
+                value: rating,
+                onValueChanged: onRatingChanged,
+                starCount: 5,
+                starSize: 32,
+                starColor: Colors.amber,
+                starOffColor: const Color(0xffe7e8ea),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: notesController,
+                decoration: const InputDecoration(
+                  labelText: 'Notes',
+                  hintText: 'Add notes about this product...',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 3,
+                onChanged: (_) => onRatingChanged(rating),
+              ),
+            ] else if (errorMessage != null)
+              Text(
+                errorMessage!,
+                style: const TextStyle(fontSize: 18, color: Colors.red),
+                textAlign: TextAlign.center,
+              ),
+            const SizedBox(height: 32),
+            ElevatedButton.icon(
+              onPressed: onReset,
+              icon: const Icon(Icons.qr_code_scanner),
+              label: const Text('Scan Another Product'),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 16,
+                ),
+                textStyle: const TextStyle(fontSize: 18),
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
+        ),
+      ),
     );
   }
 }
