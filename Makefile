@@ -1,4 +1,4 @@
-.PHONY: flutter-run-web flutter-run flutter-analyze format run-widgetbook-web help
+.PHONY: flutter-run-web flutter-run flutter-analyze format run-widgetbook-web rebase-from-latest-template help
 
 .DEFAULT_GOAL := help
 
@@ -9,6 +9,7 @@ help:
 	@echo "  make flutter-analyze   - Run Flutter analyzer"
 	@echo "  make format            - Format Dart code"
 	@echo "  make run-widgetbook-web - Run Widgetbook in web mode on port 8081"
+	@echo "  make rebase-from-latest-template - Rebase current branch on latest template changes"
 
 flutter-run-web:
 	flutter run -d web-server --web-port=8080
@@ -28,3 +29,6 @@ run-widgetbook-web:
 adb-wsl:
 	@echo 'in windows, run `adb shell ip route` to get your IP address and edit ANDROID_IP_ADDRESS_FOR_WSL_ADB in .envrc in this repo. Then run `adb tcpip 5555` to allow connections from WSL'
 	adb connect $$ANDROID_IP_ADDRESS_FOR_WSL_ADB:5555
+
+rebase-from-latest-template:
+	./scripts/rebase-from-latest-template.sh
