@@ -65,7 +65,8 @@ Widget productDetailsMinimal(BuildContext context) {
 @widgetbook.UseCase(name: 'With Notes', type: ProductDetails)
 Widget productDetailsWithNotes(BuildContext context) {
   final controller = TextEditingController(
-    text: 'Too sweet for my taste. Good for kids though. The packaging is nice.',
+    text:
+        'Too sweet for my taste. Good for kids though. The packaging is nice.',
   );
   return ProductDetails(
     barcode: '5000159484695',
