@@ -16,8 +16,8 @@ import 'package:flutter/material.dart'
         TextStyle,
         Widget;
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

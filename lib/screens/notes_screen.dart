@@ -36,14 +36,14 @@ import 'package:flutter/material.dart'
 import '../models/note.dart' as models;
 import '../services/notes_service.dart' as services;
 
-class NotesPage extends StatefulWidget {
-  const NotesPage({super.key});
+class NotesScreen extends StatefulWidget {
+  const NotesScreen({super.key});
 
   @override
-  State<NotesPage> createState() => _NotesPageState();
+  State<NotesScreen> createState() => _NotesScreenState();
 }
 
-class _NotesPageState extends State<NotesPage> {
+class _NotesScreenState extends State<NotesScreen> {
   final services.NotesService _notesService = services.NotesService();
   final TextEditingController _noteController = TextEditingController();
 

@@ -18,12 +18,12 @@ import 'package:flutter/material.dart'
         Text,
         Theme,
         Widget;
-import '../screens/colors_page.dart' as screens;
-import '../screens/home_page.dart' as screens;
-import '../screens/icons_page.dart' as screens;
-import '../screens/notes_page.dart' as screens;
-import '../screens/profile_page.dart' as screens;
-import '../screens/settings_page.dart' as screens;
+import '../screens/colors_screen.dart' as screens;
+import '../screens/home_screen.dart' as screens;
+import '../screens/icons_screen.dart' as screens;
+import '../screens/notes_screen.dart' as screens;
+import '../screens/profile_screen.dart' as screens;
+import '../screens/settings_screen.dart' as screens;
 import '../services/auth_service.dart' as auth;
 
 class Layout extends StatefulWidget {
@@ -39,10 +39,10 @@ class _LayoutState extends State<Layout> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
-    const screens.HomePage(),
-    const screens.NotesPage(),
-    const screens.IconsPage(),
-    const screens.ColorsPage(),
+    const screens.HomeScreen(),
+    const screens.NotesScreen(),
+    const screens.IconsScreen(),
+    const screens.ColorsScreen(),
   ];
 
   static const List<String> _titles = <String>[
@@ -71,13 +71,13 @@ class _LayoutState extends State<Layout> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const screens.SettingsPage()),
+                      builder: (context) => const screens.SettingsScreen()),
                 );
               } else if (value == 'profile') {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const screens.ProfilePage()),
+                      builder: (context) => const screens.ProfileScreen()),
                 );
               } else if (value == 'signout') {
                 await auth.AuthService().signOut();

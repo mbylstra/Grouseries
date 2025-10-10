@@ -20,8 +20,8 @@ import 'package:flutter/material.dart'
         TextStyle,
         Widget;
 
-class ColorsPage extends StatelessWidget {
-  const ColorsPage({super.key});
+class ColorsScreen extends StatelessWidget {
+  const ColorsScreen({super.key});
 
   static final List<MaterialColor> _colors = [
     Colors.red,

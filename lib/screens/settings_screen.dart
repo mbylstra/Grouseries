@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart'
     show AppBar, BuildContext, Center, Scaffold, StatelessWidget, Text, Widget;
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
