@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:flutter_rating/flutter_rating.dart' show StarRating;
 
 class ScanPage extends StatefulWidget {
   const ScanPage({super.key});
@@ -316,13 +316,14 @@ class ProductDetails extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
-              RatingStars(
-                value: rating,
-                onValueChanged: onRatingChanged,
+              StarRating(
+                rating: rating,
+                onRatingChanged: onRatingChanged,
+                allowHalfRating: true,
                 starCount: 5,
-                starSize: 32,
-                starColor: Colors.amber,
-                starOffColor: const Color(0xffe7e8ea),
+                size: 32,
+                color: Colors.amber,
+                borderColor: const Color(0xffe7e8ea),
               ),
               const SizedBox(height: 16),
               TextField(

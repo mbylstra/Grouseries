@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:flutter_rating/flutter_rating.dart' show StarRating;
 
 class RatingsPage extends StatelessWidget {
   const RatingsPage({super.key});
@@ -108,12 +108,16 @@ class _ProductRatingCardState extends State<ProductRatingCard> {
               style: const TextStyle(fontSize: 12, color: Colors.grey),
             ),
             const SizedBox(height: 8),
-            RatingStars(
-              value: rating,
+            StarRating(
+              rating: rating,
+              onRatingChanged: (newRating) {
+                widget.doc.reference.update({'rating': newRating});
+              },
+              allowHalfRating: true,
               starCount: 5,
-              starSize: 20,
-              starColor: Colors.amber,
-              starOffColor: const Color(0xffe7e8ea),
+              size: 32,
+              color: Colors.amber,
+              borderColor: const Color(0xffe7e8ea),
             ),
             const SizedBox(height: 8),
             TextField(
