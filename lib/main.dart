@@ -18,8 +18,6 @@ import 'screens/sign_in_screen.dart' as screens;
 import 'services/auth_service.dart' as auth;
 import 'theme.dart' as theme;
 import 'package:flutter/material.dart';
-import 'screens/scan_page.dart';
-import 'screens/ratings_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

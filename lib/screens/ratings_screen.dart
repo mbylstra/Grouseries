@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating/flutter_rating.dart' show StarRating;
 
-class RatingsPage extends StatelessWidget {
-  const RatingsPage({super.key});
+class RatingsScreen extends StatelessWidget {
+  const RatingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

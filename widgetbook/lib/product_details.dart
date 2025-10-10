@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grouseries/screens/scan_page.dart';
+import 'package:grouseries/screens/scan_screen.dart' show ProductDetails;
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(name: 'Loading', type: ProductDetails)

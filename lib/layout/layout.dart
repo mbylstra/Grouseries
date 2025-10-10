@@ -18,8 +18,8 @@ import 'package:flutter/material.dart'
         Text,
         Theme,
         Widget;
-import '../screens/scan_page.dart' show ScanPage;
-import '../screens/ratings_page.dart' show RatingsPage;
+import '../screens/scan_screen.dart' show ScanScreen;
+import '../screens/ratings_screen.dart' show RatingsScreen;
 import '../screens/profile_screen.dart' show ProfileScreen;
 import '../screens/settings_screen.dart' show SettingsScreen;
 import '../services/auth_service.dart' show AuthService;
@@ -37,8 +37,8 @@ class _LayoutState extends State<Layout> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
-    const ScanPage(),
-    const RatingsPage(),
+    const ScanScreen(),
+    const RatingsScreen(),
   ];
 
   static const List<String> _titles = <String>['Scan', 'Ratings'];

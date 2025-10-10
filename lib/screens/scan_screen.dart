@@ -5,14 +5,14 @@ import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating/flutter_rating.dart' show StarRating;
 
-class ScanPage extends StatefulWidget {
-  const ScanPage({super.key});
+class ScanScreen extends StatefulWidget {
+  const ScanScreen({super.key});
 
   @override
-  State<ScanPage> createState() => _ScanPageState();
+  State<ScanScreen> createState() => _ScanScreenState();
 }
 
-class _ScanPageState extends State<ScanPage> {
+class _ScanScreenState extends State<ScanScreen> {
   String? _scannedBarcode;
   String? _productName;
   String? _brand;
