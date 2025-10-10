@@ -18,13 +18,13 @@ import 'package:flutter/material.dart'
         Text,
         Theme,
         Widget;
-import '../screens/colors_screen.dart' as screens;
-import '../screens/home_screen.dart' as screens;
-import '../screens/icons_screen.dart' as screens;
-import '../screens/notes_screen.dart' as screens;
-import '../screens/profile_screen.dart' as screens;
-import '../screens/settings_screen.dart' as screens;
-import '../services/auth_service.dart' as auth;
+import '../screens/colors_screen.dart' show ColorsScreen;
+import '../screens/home_screen.dart' show HomeScreen;
+import '../screens/icons_screen.dart' show IconsScreen;
+import '../screens/notes_screen.dart' show NotesScreen;
+import '../screens/profile_screen.dart' show ProfileScreen;
+import '../screens/settings_screen.dart' show SettingsScreen;
+import '../services/auth_service.dart' show AuthService;
 
 class Layout extends StatefulWidget {
   const Layout({super.key, required this.title});
@@ -39,10 +39,10 @@ class _LayoutState extends State<Layout> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
-    const screens.HomeScreen(),
-    const screens.NotesScreen(),
-    const screens.IconsScreen(),
-    const screens.ColorsScreen(),
+    const HomeScreen(),
+    const NotesScreen(),
+    const IconsScreen(),
+    const ColorsScreen(),
   ];
 
   static const List<String> _titles = <String>[
@@ -71,16 +71,16 @@ class _LayoutState extends State<Layout> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const screens.SettingsScreen()),
+                      builder: (context) => const SettingsScreen()),
                 );
               } else if (value == 'profile') {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const screens.ProfileScreen()),
+                      builder: (context) => const ProfileScreen()),
                 );
               } else if (value == 'signout') {
-                await auth.AuthService().signOut();
+                await AuthService().signOut();
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
