@@ -1,4 +1,4 @@
-.PHONY: flutter-run-web flutter-run flutter-analyze format run-widgetbook-web rebase-from-latest-template help
+.PHONY: flutter-run-web flutter-run flutter-analyze format run-widgetbook-web rebase-from-latest-template merge-latest-template help
 
 .DEFAULT_GOAL := help
 
@@ -10,6 +10,7 @@ help:
 	@echo "  make format            - Format Dart code"
 	@echo "  make run-widgetbook-web - Run Widgetbook in web mode on port 8081"
 	@echo "  make rebase-from-latest-template - Rebase current branch on latest template changes"
+	@echo "  make merge-latest-template - Merge latest template changes into current branch"
 
 flutter-run-web:
 	flutter run -d web-server --web-port=8080
@@ -32,3 +33,6 @@ adb-wsl:
 
 rebase-from-latest-template:
 	./scripts/rebase-from-latest-template.sh
+
+merge-latest-template:
+	./scripts/merge-latest-template.sh
