@@ -20,8 +20,6 @@ import 'package:flutter/material.dart'
         Widget;
 import '../screens/scan_screen.dart' show ScanScreen;
 import '../screens/ratings_screen.dart' show RatingsScreen;
-import '../screens/profile_screen.dart' show ProfileScreen;
-import '../screens/settings_screen.dart' show SettingsScreen;
 import '../services/auth_service.dart' show AuthService;
 
 class Layout extends StatefulWidget {
@@ -58,21 +56,7 @@ class _LayoutState extends State<Layout> {
         actions: [
           PopupMenuButton<String>(
             onSelected: (value) async {
-              if (value == 'settings') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SettingsScreen(),
-                  ),
-                );
-              } else if (value == 'profile') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProfileScreen(),
-                  ),
-                );
-              } else if (value == 'signout') {
+              if (value == 'signout') {
                 await AuthService().signOut();
               }
             },
