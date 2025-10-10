@@ -41,10 +41,7 @@ class _LayoutState extends State<Layout> {
     const RatingsPage(),
   ];
 
-  static const List<String> _titles = <String>[
-    'Scan'
-        'Ratings',
-  ];
+  static const List<String> _titles = <String>['Scan', 'Ratings'];
 
   void _onItemTapped(int index) {
     setState(() {
