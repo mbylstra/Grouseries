@@ -12,8 +12,8 @@ import 'package:flutter/material.dart'
         StatelessWidget,
         Widget;
 
-class IconsPage extends StatelessWidget {
-  const IconsPage({super.key});
+class IconsScreen extends StatelessWidget {
+  const IconsScreen({super.key});
 
   static final List<IconData> _icons = [
     Icons.home,

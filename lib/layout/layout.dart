@@ -20,9 +20,9 @@ import 'package:flutter/material.dart'
         Widget;
 import '../screens/scan_page.dart' show ScanPage;
 import '../screens/ratings_page.dart' show RatingsPage;
-import '../screens/profile_page.dart' as screens;
-import '../screens/settings_page.dart' as screens;
-import '../services/auth_service.dart' as auth;
+import '../screens/profile_screen.dart' show ProfileScreen;
+import '../screens/settings_screen.dart' show SettingsScreen;
+import '../services/auth_service.dart' show AuthService;
 
 class Layout extends StatefulWidget {
   const Layout({super.key, required this.title});
@@ -62,18 +62,18 @@ class _LayoutState extends State<Layout> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const screens.SettingsPage(),
+                    builder: (context) => const SettingsScreen(),
                   ),
                 );
               } else if (value == 'profile') {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const screens.ProfilePage(),
+                    builder: (context) => const ProfileScreen(),
                   ),
                 );
               } else if (value == 'signout') {
-                await auth.AuthService().signOut();
+                await AuthService().signOut();
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
